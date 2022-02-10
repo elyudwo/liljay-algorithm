@@ -1,29 +1,26 @@
 #include <iostream>
-#include <string.h>
+#include <string>
 
 using namespace std;
 
 int main(void)
 {
-	char c[100];
-	int key = 0;
-	char alp[] = "abcdefghijklmnopqrstuvwxyz";
-	cin >> c;
-	for(int i=0;i<strlen(alp);i++)
+	string str;
+	cin >> str;
+	
+	int n[25];
+	for(int i=0;i<26;i++)
+		n[i] = -1;
+	
+	for(int i=0;i<26;i++)
 	{
-		for(int j=0;j<strlen(c);j++)
-		{
-			if(alp[i] == c[j])
-			{
-				cout << j << " ";
-				key = 0;
-				break;
-			}
-			else
-				key = 1;
-		}
-		if(key == 1)
-			cout << "-1 ";
+		n[str[i]-'a'] = i;
 	}
+	
+	for(int i=0;i<26;i++)
+	{
+		cout << n[i] << " ";
+	}
+	
 	return 0;
 }

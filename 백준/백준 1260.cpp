@@ -1,67 +1,65 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <algorithm>
+
 using namespace std;
 
-int c1[1000];
-int c2[1000];
-vector<int> v[1001];
-vector<int> a[1001];
+vector<int> d[1001];
 
-void bfs(int a)
+int c1[10001];
+int bf[10001];
+
+void dfs(int n)
 {
-	queue<int> q;
-	q.push(a);
-	c2[a] = true;
-	
-	while(!q.empty())
-	{
-		int x = q.front();
-		q.pop();
-		cout << x << ' ';
-		for(int i=0; i<a[x].size(); i++)
-		{
-			int y = a[x][i];
-			if(!c2[y])
-			{
-				q.push(y);
-				c2[y] = true;
-			}	
-		}
+	if(c1[n])	return;
+	c1[n] = true;
+	cout << n << ' ';
+	for(int i=0; i < d[n].size(); i++) {
+		int y = d[n][i];
+		dfs(y);
 	}
 }
 
-
-void dfs(int a)
+void bfs(int n) 
 {
-	if(c1[a])	return;
-	c1[a] = true;
-	cout << a << ' ';
-	for(int i=0; i<v[a].size(); i++)
-	{
-		int y = v[a][i];
-		dfs(y);
+	queue<int> q;
+	q.push(n);
+	bf[n] = true;
+	while(!q.empty()) {
+		int x = q.front();
+		q.pop();
+		cout << x << ' ';
+		for(int i=0; i<d[x].size(); i++) {
+			int y = d[x][i];
+			if(!bf[y]) {
+				q.push(y);
+				bf[y] = true;
+			}
+		}
 	}
 }
 
 int main(void)
 {
-	int N,M,V;
-	cin >> N >> M >> V;	
 	
-	for(int i=0; i<M; i++)
-	{
+	int n, m, v;
+	cin >> n >> m >> v;
+	
+	for(int i=0; i<m; i++) {
 		int a,b;
 		cin >> a >> b;
-		v[a].push_back(b);
-		v[b].push_back(a);
-		a[a].push_back(b);
-		a[b].push_back(a);
+		d[a].push_back(b);
+		d[b].push_back(a);
 	}
 	
-	dfs(V);
+	for(int i=1; i<=n; i++) {
+		sort(d[i].begin(),d[i].end());
+	}
+	
+	dfs(v);
 	cout << endl;
-	bfs(V);
+	bfs(v);
 	
 	return 0;
 }

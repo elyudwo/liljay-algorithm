@@ -1,58 +1,54 @@
 #include <iostream>
 #include <vector>
-
+#include <cstring> 
 using namespace std;
 
-int veg[50][50];
-int cnt = 0;
-int T,M,N,K;
-int dy[] = {0,0,-1,1};
+bool c[51][51];
+int cab[51][51];
 int dx[] = {-1,1,0,0};
+int dy[] = {0,0,1,-1};
+int m,n,k;
 
-void dfs(int i, int j)
+void dfs(int x,int y) 
 {
-	veg[i][j] = 0;
-	for(int i=0; i<4; i++)
-	{
-		int nx = j + dx[i];
-		int ny = i + dy[i];
-		if (nx < 0 || nx >= M || ny < 0 || ny >= N)
-            continue;
-        
-        if(veg[ny][nx] == 1)
-        	dfs(ny,nx);
-	}			
+	c[x][y] = true;
+	for(int i=0; i<4; i++) {
+		int nx = dx[i] + x;
+		int ny = dy[i] + y;
+		if(nx >= 0 && nx < n && ny >=0 && ny < m) {
+			if(cab[nx][ny] == 1) {
+				if(!c[nx][ny]) {
+					dfs(nx,ny);
+				}
+			}
+		}
+	}
 }
 
 int main(void)
 {
-	cin >> T;
-	
-	for(int i=0; i<T; i++)
-	{	
-		cnt = 0;
-		cin >> M >> N >> K;
-
-		for(int j=0; j<K; j++)
-		{
+	int t;
+	cin >> t;
+	for(int i=0; i<t; i++) {
+		cin >> m >> n >> k;
+		int cnt = 0;
+		for(int i=0; i<k; i++) {
 			int a,b;
 			cin >> a >> b;
-			veg[a][b] = 1;
+			cab[a][b] = 1;
 		}
-		for(int i=0; i<M; i++)
-		{
-			for(int j=0; j<N; j++)
-			{
-				if(veg[i][j] == 1)
-				{
-					cnt++;
-					dfs(i,j);
+		for(int i=0; i<n; i++) {
+			for(int j=0; j<m; j++) {
+				if(cab[i][j] == 1) {
+					if(!c[i][j]) {
+						cnt++;
+						dfs(i,j);
+					}
 				}
 			}
 		}
-	} 
-	
-	cout << cnt;
-	
-	return 0;
+		cout << cnt << endl;
+		memset(c,false,sizeof(c));
+		memset(cab,0,sizeof(c));	
+	}
 }

@@ -1,55 +1,84 @@
 #include <iostream>
-#include <cmath>
 #include <algorithm>
+#include <cmath>
 using namespace std;
 
-bool compare(int a, int b)
-{
-	return a > b;
-}
+int v[500001];
 
 int main(void)
 {
-	int N;
-	cin >> N;
-	int num[N];
-	int b,c;
-	double a = 0;
-	for(int i=0; i<N; i++)
-	{
-		cin >> num[i];
-		a = a + num[i];
-	}	
-	cout << round(a/N) << endl;
+	int n;
+	cin >> n;
 	
-	sort(num,num+N);
-	b = num[N/2];
-	cout << b << endl;
+	for(int i=0; i<n; i++) {
+		cin >> v[i];
+	}
+	double a;
+	double sum = 0;
 	
-	int d = num[N-1] - num[0];
-	
-	int j = 0;
-	int count[N]={0,0,0};
-	while(j < N)
-	{
-		int k = num[j];
-		for(int i=0; i<N; i++)
-		{
-			if(k == num[i])
-			{
-				count[j]++;
-			}
-		}
-		j++;
+	for(int i=0; i<n; i++) {
+		sum = sum + v[i];
 	}
 	
-	sort(count,count+N);
-	if(count[0] == count[N-1])
-		cout << num[1] << endl;
-	else
-		cout << count[N-1] << endl;
-		
-	cout << d;
+	if(sum / n > -0.5 && sum < 0) {
+		cout << 0 << endl;
+	}
+	else {
+		a = sum / n; 
+		a = round(a);
+	
+		cout << a << endl;	
+	}
+	
+	
+	sort(v,v+n);
+	
+	cout << v[n/2] << endl;
+	
+	int max_cnt = -1;
+	
+	for(int i=0; i<n; i++) {
+		int cnt = 0;
+		while(1) {
+			if(v[i] == v[i+1]) {
+				cnt++;
+				i++;
+			}
+			else {
+				break;
+			}
+		}
+		max_cnt = max(max_cnt,cnt);
+	}
+	
+	int lee[500001];
+	int j = 0;
+	for(int i=0; i<n; i++) {
+		int cnt = 0;
+		while(1) {
+			if(v[i] == v[i+1]) {
+				cnt++;
+				i++;
+			}
+			else {
+				break;
+			}
+		}
+		if(cnt == max_cnt) {
+			lee[j++] = v[i];
+		}
+	}
+	
+	sort(lee,lee+j);
+	if(j < 2) {
+		cout << lee[0] << endl;
+	}
+	else {
+		cout << lee[1] << endl;	
+	}
+	
+	
+	cout << v[n-1] - v[0];
 	
 	return 0;
 }

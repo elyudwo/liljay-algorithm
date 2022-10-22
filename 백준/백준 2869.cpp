@@ -1,32 +1,26 @@
 #include <iostream>
-#include <algorithm>
-
+#include <cmath>
 using namespace std;
 
 int main(void)
 {
-	int M,N,i;
-	int sum = 0;
-	cin >> M;
-	cin >> N;
+	double a,b,v;
+	cin >> a >> b >> v;
 	
-	int k[N-M];
+	long long cnt = ceil((v-a) / (a-b));
 	
-	for(M;M<=N;M++)
-	{
-		if(M%2!=0 && M%3!=0 && M%5!=0 && M%7!=0)
-		{
-			k[M] = M;
-			sum += M;
-		}
-	}
-	while(k[M])
-	{
-		i=k[M];
+	if(a == v) {
+		cout << "1";
+		return 0;
 	}
 	
-	cout << sum << endl << i;
+	if(cnt == 0) {
+		cout << "2";
+		return 0;
+	}
 	
+	
+	cout << cnt+1;
 	
 	return 0;
 }

@@ -1,33 +1,44 @@
 #include <iostream>
 #include <algorithm>
+#include <vector>
+
 using namespace std;
 
+int day[16];
+int price[16];
+int result = -1;
+int n;
 
-int v[16];
-int time[16];
-int dp[16];
+void dfs(int sum,int num)
+{
+	if(num == n+1) {
+		result = max(result,sum);
+		return;
+	}
+	else if(num + day[num] <= n+1) {
+		dfs(sum + price[num] , num + day[num]);
+		dfs(sum,num+1);
+	}
+	else if(num + day[num] > n+1) {
+		result = max(result,sum);
+		dfs(sum,num+1);
+		return;
+	}
+}
 
 int main(void)
 {
-	int n;
 	cin >> n;
-	
 	for(int i=1; i<=n; i++) {
-		cin >> time[i] >> v[i];
+		int d,p;
+		cin >> d >> p;
+		day[i] = d;
+		price[i] = p;
 	}
 	
-	for(int i=1; i<=n; i++) {
-		if(i + time[i] > n+1) continue;
-		if(i + time[i] == n+1) {
-			dp[i+time[i] - 1] = max(dp[i] + v[i],dp[i+time[i]]);
-		}
-		for(int j=i+time[i]; j<=n; j++) {
-			dp[j] = max(dp[i] + v[i],dp[j]);
-		}
-	}
+	dfs(0,1);
 	
-	sort(dp+1,dp+(n+1));
-	cout << dp[n];
+	cout << result;
 	
 	return 0;
 }

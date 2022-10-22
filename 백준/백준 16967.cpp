@@ -2,8 +2,8 @@
 
 using namespace std;
 
-int v[601][601];
-int lee[601][601];
+int v[1001][1001];
+int result[1001][1001];
 int main(void)
 {
 	int h,w,x,y;
@@ -11,15 +11,16 @@ int main(void)
 	
 	for(int i=0; i<h+x; i++) {
 		for(int j=0; j<w+y; j++) {
-			cin >> v[i][j];	
+			cin >> v[i][j];
 		}
 	}
-	// ±³ÁýÇÕ
-	for(int i=x; i<h; i++) {
-		for(int j=y; j<w; j++) {
+	
+	for(int i=x; i<x + (h-x); i++) {
+		for(int j=y; j<y + (w - y); j++) {
 			v[i][j] = v[i][j] - v[i-x][j-y];
 		}
 	}
+	
 	
 	for(int i=0; i<h; i++) {
 		for(int j=0; j<w; j++) {

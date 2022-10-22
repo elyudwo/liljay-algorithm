@@ -1,36 +1,50 @@
 #include <iostream>
-#include <algorithm>
-#include <cmath>
 #include <vector>
+#include <algorithm>
+#include <cmath> 
 using namespace std;
 
-vector<int> v;
+int n;
+vector<int> vec;
+vector<int> rem;
+int result = 0;
+bool check[9];
+void dfs_permutation(int cnt)
+{
+	if(rem.size() == n) {
+		int tmp = 0;
+		for(int i=0; i<n-1; i++) {
+			tmp = tmp + fabs(rem[i] - rem[i+1]);
+		}
+		
+		result = max(result,tmp);
+		return;
+	}
+	
+	for(int i=0; i<n; i++) {
+		if(check[i])	continue;
+		check[i] = true;
+		rem.push_back(vec[i]);
+		dfs_permutation(cnt+1);
+		rem.pop_back();
+		check[i] = false;
+	}
+	
+}
 
 int main(void)
 {
-	int n;
 	cin >> n;
+	
 	for(int i=0; i<n; i++) {
-		int a;
-		cin >> a;
-		v.push_back(a);
+		int tmp;
+		cin >> tmp;
+		vec.push_back(tmp);
 	}
-	sort(v.begin(),v.end());
-	int result = -1;
-	int cnt = 0;
-	do {
-		int sum = 0;
-		for(int i=0; i<n-1; i++) {
-			sum = sum + abs(v[i] - v[i+1]);
-		}
-		if(result < sum) {
-			result = sum;
-		}
-		
-	}while(next_permutation(v.begin(),v.end()));
 	
+	dfs_permutation(0);
 	
-	cout << result ;
-		
+	cout << result;
+	
 	return 0;
 }

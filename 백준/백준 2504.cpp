@@ -1,61 +1,85 @@
 #include <iostream>
+#include <stack>
 #include <string>
-
+#include <cmath>
 using namespace std;
 
-int main(void)
-{
+stack<char> stk;
+int result = 0;
+bool check = true;
+
+void printStack(stack<char> tmp) {
+	int s = tmp.size(); 
+	for(int i=0; i<s; i++) {
+		cout << tmp.top();
+		tmp.pop();
+	}
+	cout << endl;
+}
+
+void calculate(char c) {
+	stk.pop();
+	stack<char> rem = stk;
+	
+	int tmp = 0;
+	int one = 0;
+	int two = 0;
+	int s = rem.size();
+	for(int i=0; i<s; i++) {
+		if(rem.top() == '(') {
+			one++;
+		}
+		else if(rem.top() == '[') {
+			two++;
+		}
+		rem.pop();
+	}
+	
+	if(one != 0) {
+		tmp = pow(2,one);
+	}
+	if(two != 0) {
+		tmp = pow(3,two);
+	}
+	
+	if(c == ']') {
+		result = result + tmp*3;
+	}
+	else if(c == ')'){
+		result = result + tmp*2;
+	}
+}
+
+
+int main() {
 	string str;
 	cin >> str;
-	
-	int sum = 0;
-	
-	
-	int cnt = 1;
-	bool small = false;
-	bool middle = false;
-	
-	int small_cnt,middle_cnt = 0;
-	
 	for(int i=0; i<str.length(); i++) {
-		if(str[i] == '(') {
-			small = true;
-			small_cnt += 1;
-		}
-		else if(str[i] == '[') {
-			middle = true;
-			middle_cnt += 1;
+		if(str[i] == ')') {
+			if(stk.top() != '(') {
+				check = false;
+				break;
+			}
+			calculate(')');
 		}
 		else if(str[i] == ']') {
-			if(str[i-1] == '(') {
-				cout << "0";
-				return 0;
+			if(stk.top() != '[') {
+				check = false;
+				break;
 			}
-			
-			if(middle_cnt == 0) {
-				cout << "0";
-				return 0;
-			}
-			else {
-				middle_cnt -= 1;
-			}
+			calculate(']');
 		}
-		else if(str[i] == ')') {
-			if(str[i-1] == '[') {
-				cout << "0";
-				return 0;
-			}
-			
-			if(small_cnt == 0) {
-				cout << "0";
-				return 0;
-			}
-			else {
-				small_cnt -= 1;
-			}
+		else {
+			stk.push(str[i]);
 		}
+		printStack(stk);
 	}	
 	
+	if(!check) {
+		cout << "0";
+	}
+	else {
+		cout << result;
+	}
 	
-	return 0;
 }

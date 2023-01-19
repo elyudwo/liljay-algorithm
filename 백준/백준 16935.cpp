@@ -2,267 +2,135 @@
 
 using namespace std;
 
-int v[101][101];
-bool check = false;
-int main(void)
-{
-	int n,m,r;
+int n,m,r;
+int rem[101][101];
+int arr[101][101];
+//row == За  column = ї­ 
+int row,column;
+
+
+void input() {
 	cin >> n >> m >> r;
+	row = n;
+	column = m;
 	for(int i=1; i<=n; i++) {
 		for(int j=1; j<=m; j++) {
-			cin >> v[i][j];
+			cin >> arr[i][j];
 		}
 	}
-	while(r--) {
-		int a;
-		cin >> a;
-		int tmp[101][101];
-		if(a == 1) {
-			if(!check) {
-				for(int i=0; i<n; i++) {
-					for(int j=1; j<=m; j++) {
-						tmp[n-i][j] = v[i+1][j];
-					}
-				}
-				for(int i=1; i<=n; i++) {
-					for(int j=1; j<=m; j++) {
-						v[i][j] = tmp[i][j];
-					}
-				}	
-			}
-			else {
-				for(int i=1; i<=m; i++) {
-					for(int j=1; j<=n; j++) {
-						tmp[i][j] = v[m-i+1][j];
-					}
-				}
-				for(int i=1; i<=m; i++) {
-					for(int j=1; j<=n; j++) {
-						v[i][j] = tmp[i][j];
-					}
-				}
-			}
+}
+
+void printArr() {
+	for(int i=1; i<=row; i++) {
+		for(int j=1; j<=column; j++) {
+			cout << arr[i][j] << " ";
 		}
-		
-		else if(a == 2) {
-			if(!check) {
-				for(int i=1; i<=n; i++) {
-					for(int j=1; j<=m; j++) {
-						tmp[i][j] = v[i][m-j+1];
-					}
-				}
-				for(int i=1; i<=n; i++) {
-					for(int j=1; j<=m; j++) {
-						v[i][j] = tmp[i][j];
-					}
-				}
-			}
-			else {
-				for(int i=1; i<=m; i++) {
-					for(int j=1; j<=n; j++) {
-						tmp[i][j] = v[i][n-j+1];
-					}
-				}
-				for(int i=1; i<=m; i++) {
-					for(int j=1; j<=m; j++) {
-						v[i][j] = tmp[i][j];
-					}
-				}
-			}
-			
-		}
-		else if(a == 3) {
-			if(!check) {
-				for(int i=1; i<=m; i++) {
-					for(int j=1; j<=n; j++) {
-						tmp[i][j] = v[n-j+1][i];
-					}
-				} 
-				for(int i=1; i<=m; i++) {
-					for(int j=1; j<=n; j++) {
-						v[i][j] = tmp[i][j];
-					}
-				}
-				check = true;
-			}
-			else {
-				for(int i=1; i<=n; i++) {
-					for(int j=1; j<=m; j++) {
-						tmp[i][j] = v[m-j+1][i];
-					}
-				}
-				for(int i=1; i<=n; i++) {
-					for(int j=1; j<=m; j++) {
-						v[i][j] = tmp[i][j];
-					}
-				}
-				check = false;
-			}
-		}
-		
-		else if(a == 4) {
-			if(!check) {
-				for(int i=1; i<=m; i++) {
-					for(int j=1; j<=n; j++) {
-						tmp[i][j] = v[j][m-i+1];
-					}
-				}
-				for(int i=1; i<=m; i++) {
-					for(int j=1; j<=n; j++) {
-						v[i][j] = tmp[i][j];
-					}
-				}
-				check = true;
-			}
-			else {
-				for(int i=1; i<=n; i++) {
-					for(int j=1; j<=m; j++) {
-						tmp[i][j] = v[j][n-i+1];
-					}
-				}
-				for(int i=1; i<=n; i++) {
-					for(int j=1; j<=m; j++) {
-						v[i][j] = tmp[i][j];
-					}
-				}
-				check = false;
-			}
-		}
-		
-		else if(a == 5) {
-			if(!check) {
-				for(int i=1; i<=n/2; i++) {
-					for(int j=1; j<=m/2; j++) {
-						tmp[i][j] = v[n/2+i][j];
-					}
-				}
-				for(int i=1; i<=n/2; i++) {
-					for(int j=m/2+1; j<=m; j++) {
-						tmp[i][j] = v[i][j-m/2];
-					}
-				}
-				for(int i=n/2+1; i<=n; i++) {
-					for(int j=1; j<=m/2; j++) {
-						tmp[i][j] = v[i][m/2+j];
-					}
-				}
-				for(int i=n/2+1; i<=n; i++) {
-					for(int j=m/2+1; j<=m; j++) {
-						tmp[i][j] = v[i-n/2][j];
-					}
-				}
-				
-				for(int i=1; i<=n; i++) {
-					for(int j=1; j<=m; j++) {
-						v[i][j] = tmp[i][j];
-					}
-				}
-			}
-			else {
-				for(int i=1; i<=m/2; i++) {
-					for(int j=1; j<=n/2; j++) {
-						tmp[i][j] = v[m/2+i][j];
-					}
-				}
-				for(int i=1; i<=m/2; i++) {
-					for(int j=n/2+1; j<=n; j++) {
-						tmp[i][j] = v[i][j-n/2];
-					}
-				}
-				for(int i=m/2+1; i<=m; i++) {
-					for(int j=1; j<=n/2; j++) {
-						tmp[i][j] = v[i][n/2+j];
-					}
-				}
-				for(int i=m/2+1; i<=m; i++) {
-					for(int j=n/2+1; j<=n; j++) {
-						tmp[i][j] = v[i-m/2][j];
-					}
-				}
-				
-				for(int i=1; i<=m; i++) {
-					for(int j=1; j<=n; j++) {
-						v[i][j] = tmp[i][j];
-					}
-				}
-			}
-		}
-		
-		else if(a == 6) {
-			if(!check) {
-				for(int i=1; i<=n/2; i++) {
-					for(int j=1; j<=m/2; j++) {
-						tmp[i][j] = v[i][m/2+j];
-					}
-				}
-				for(int i=1; i<=n/2; i++) {
-					for(int j=m/2+1; j<=m; j++) {
-						tmp[i][j] = v[n/2+i][j];
-					}
-				}
-				for(int i=n/2+1; i<=n; i++) {
-					for(int j=1; j<=m/2; j++) {
-						tmp[i][j] = v[i-n/2][j];
-					}
-				}
-				for(int i=n/2+1; i<=n; i++) {
-					for(int j=m/2+1; j<=m; j++) {
-						tmp[i][j] = v[i][j-m/2];
-					}
-				}
-				
-				for(int i=1; i<=n; i++) {
-					for(int j=1; j<=m; j++) {
-						v[i][j] = tmp[i][j];
-					}
-				}
-			}
-			else {
-				for(int i=1; i<=m/2; i++) {
-					for(int j=1; j<=n/2; j++) {
-						tmp[i][j] = v[i][n/2+j];
-					}
-				}
-				for(int i=1; i<=m/2; i++) {
-					for(int j=n/2+1; j<=n; j++) {
-						tmp[i][j] = v[m/2+i][j];
-					}
-				}
-				for(int i=m/2+1; i<=m; i++) {
-					for(int j=1; j<=n/2; j++) {
-						tmp[i][j] = v[i-m/2][j];
-					}
-				}
-				for(int i=m/2+1; i<=m; i++) {
-					for(int j=n/2+1; j<=n; j++) {
-						tmp[i][j] = v[i][j-n/2];
-					}
-				}
-				
-				for(int i=1; i<=m; i++) {
-					for(int j=1; j<=n; j++) {
-						v[i][j] = tmp[i][j];
-					}
-				}
+		cout << "\n";
+	}
+}
+
+void turnArr(int tmp) {
+	if(tmp == 1) {
+		for(int i=1; i<=row; i++) {
+			for(int j=1; j<=column; j++) {
+				rem[i][j] = arr[row-i+1][j];
 			}
 		}
 	}
-	if(check) {
-		for(int i=1; i<=m; i++) {
-			for(int j=1; j<=n; j++) {
-				cout << v[i][j] << " ";
+	else if(tmp == 2) {
+		for(int i=1; i<=row; i++) {
+			for(int j=1; j<=column; j++) {
+				rem[i][j] = arr[i][column-j+1];
 			}
-			cout << endl;
 		}
 	}
-	else {
-		for(int i=1; i<=n; i++) {
-			for(int j=1; j<=m; j++) {
-				cout << v[i][j] << " ";
+	else if(tmp == 3) {
+		int tmp = row;
+		row = column;
+		column = tmp;
+		for(int i=1; i<=row; i++) {
+			for(int j=1; j<=column; j++) {
+				rem[i][j] = arr[column-j+1][i];
 			}
-			cout << endl;
 		}
 	}
+	else if(tmp == 4) {
+		int tmp = row;
+		row = column;
+		column = tmp;
+		for(int i=1; i<=row; i++) {
+			for(int j=1; j<=column; j++) {
+				rem[i][j] = arr[j][row-i+1];
+			}
+		}
+	} 
+	else if(tmp == 5) {
+		for(int i=1; i<=row/2; i++) {
+			for(int j=1; j<=column/2; j++) {
+				rem[i][j] = arr[row/2+1+i-1][j];
+			}
+		}
+		for(int i=1; i<=row/2; i++) {
+			for(int j=column/2+1; j<=column; j++) {
+				rem[i][j] = arr[i][j-column/2];
+			}
+		}
+		for(int i=row/2+1; i<=row; i++) {
+			for(int j=1; j<=column/2; j++) {
+				rem[i][j] = arr[i][j+column/2];
+			}
+		}
+		for(int i=row/2+1; i<=row; i++) {
+			for(int j=column/2+1; j<=column; j++) {
+				rem[i][j] = arr[i-row/2][j];
+			}
+		}
+	}
+	else if(tmp == 6) {
+		for(int i=1; i<=row/2; i++) {
+			for(int j=1; j<=column/2; j++) {
+				rem[i][j] = arr[i][j+column/2];
+			}
+		}
+		for(int i=1; i<=row/2; i++) {
+			for(int j=column/2+1; j<=column; j++) {
+				rem[i][j] = arr[i+row/2][j];
+			}
+		}
+		for(int i=row/2+1; i<=row; i++) {
+			for(int j=1; j<=column/2; j++) {
+				rem[i][j] = arr[i-row/2][j];
+			}
+		}
+		for(int i=row/2+1; i<=row; i++) {
+			for(int j=column/2+1; j<=column; j++) {
+				rem[i][j] = arr[i][j-column/2];
+			}
+		}
+	}
+}
+
+void copyArr() {
+	for(int i=1; i<=row; i++) {
+		for(int j=1; j<=column; j++) {
+			arr[i][j] = rem[i][j];
+		}
+	}
+}
+
+void solve() {
+	int tmp;
+	for(int i=0; i<r; i++) {
+		cin >> tmp;
+		turnArr(tmp);
+		copyArr();
+	} 
+}
+
+
+int main() {
+	input();
+	solve();
+	printArr();
 	
-	return 0;
 }

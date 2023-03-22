@@ -40,11 +40,8 @@ void bfs(int x_tmp, int y_tmp, vector<string> board) {
                 int nx = x1 + dx[i];
                 int ny = y1 + dy[i];
                 if(nx < 0 || ny < 0 || nx >=n || ny >= m || board[nx][ny] == 'D') {
-                    if(check[x1][y1]) {
-                        break;
-                    }
-                    else {
-                        q.push({x1,y1,cnt+1});
+                    if(!check[x1][y1]) {
+                        q.push({x1,y1,cnt+1}); 
                     }
                     break;
                 }
@@ -61,6 +58,7 @@ void bfs(int x_tmp, int y_tmp, vector<string> board) {
 int solution(vector<string> board) {
     n = board.size();
     m = board[0].size();
+    
     for(int i=0; i<n; i++) {
         for(int j=0; j<m; j++) {
             if(board[i][j] == 'R') {

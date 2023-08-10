@@ -1,3 +1,4 @@
 # 알고리즘 풀이
 
-# 나 사나이 이영재 가는 길 그 누가 막으리
+# dudqk9696@naver.com
+# https://real-man-liljay.tistory.com/

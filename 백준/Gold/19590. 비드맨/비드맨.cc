@@ -1,12 +1,11 @@
 #include <iostream>
 #include <vector>
-#include <stack>
-#include <cmath>
 #include <algorithm>
 
 using namespace std;
 
 vector<long long> vec;
+
 int n;
 
 bool cmp(int a, int b) {
@@ -21,28 +20,27 @@ void input() {
 		cin >> tmp;
 		vec.push_back(tmp);
 	}
-	
+
 	sort(vec.begin(), vec.end(), cmp);
 }
 
 void solve() {
-	long long bob = 0;
+	long long big = vec[0];
+	long long sum = 0;
 	
-	for(int i=1; i<n; i++) {
-		bob += vec[i];
-	}
+	for(int i=1; i<n; i++) { sum += vec[i]; }
 	
-	if(bob > vec[0]) {
-		if((bob + vec[0]) % 2 == 0) {
-			cout << "0";
+	
+	if(sum > big) {
+		if((sum + big) % 2 == 1) {
+			cout << "1";
 			return;
-		}
-		cout << "1";
+		} 
+		cout << "0";
 		return;
 	}
 	
-	cout << vec[0] - bob;
-
+	cout << big - sum;
 }
 
 int main() {

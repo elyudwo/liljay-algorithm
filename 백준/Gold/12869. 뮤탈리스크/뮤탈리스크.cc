@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int dp[70][70][70];
+int dp[61][61][61];
 int n;
 int scv[3];
 
@@ -14,9 +14,9 @@ void input() {
 		cin >> scv[i];
 	}
 	
-	for(int i=0; i<=69; i++) {
-		for(int j=0; j<=69; j++) {
-			for(int k=0; k<=69; k++) {
+	for(int i=0; i<=60; i++) {
+		for(int j=0; j<=60; j++) {
+			for(int k=0; k<=60; k++) {
 				dp[i][j][k] = INF;
 			}
 		}
@@ -26,16 +26,15 @@ void input() {
 void solve() {
 	dp[scv[0]][scv[1]][scv[2]] = 0;
 	
-	for(int i=scv[0]; i>=-9; i--) {
-		for(int j=scv[1]; j>=-9; j--) {
-			for(int k=scv[2]; k>=-9; k--) {
-				dp[max(0,i)][max(0,j)][max(0,k)] = min(dp[max(0,i)][max(0,j)][max(0,k)], dp[max(0, i + 9)][max(0,j + 3)][max(0,k + 1)] + 1);
-				dp[max(0,i)][max(0,j)][max(0,k)] = min(dp[max(0,i)][max(0,j)][max(0,k)], dp[max(0, i + 9)][max(0,j + 1)][max(0,k + 3)] + 1);
-				dp[max(0,i)][max(0,j)][max(0,k)] = min(dp[max(0,i)][max(0,j)][max(0,k)], dp[max(0, i + 3)][max(0,j + 9)][max(0,k + 1)] + 1);
-				dp[max(0,i)][max(0,j)][max(0,k)] = min(dp[max(0,i)][max(0,j)][max(0,k)], dp[max(0, i + 3)][max(0,j + 1)][max(0,k + 9)] + 1);
-				dp[max(0,i)][max(0,j)][max(0,k)] = min(dp[max(0,i)][max(0,j)][max(0,k)], dp[max(0, i + 1)][max(0,j + 3)][max(0,k + 9)] + 1);
-				dp[max(0,i)][max(0,j)][max(0,k)] = min(dp[max(0,i)][max(0,j)][max(0,k)], dp[max(0, i + 1)][max(0,j + 9)][max(0,k + 3)] + 1);
-				
+	for(int i=scv[0]; i>=0; i--) {
+		for(int j=scv[1]; j>=0; j--) {
+			for(int k=scv[2]; k>=0; k--) {
+				dp[max(0, i - 9)][max(0,j - 3)][max(0,k - 1)] = min(dp[max(0,i)][max(0,j)][max(0,k)] + 1, dp[max(0, i - 9)][max(0,j - 3)][max(0,k - 1)]);
+				dp[max(0, i - 9)][max(0,j - 1)][max(0,k - 3)] = min(dp[max(0,i)][max(0,j)][max(0,k)] + 1, dp[max(0, i - 9)][max(0,j - 1)][max(0,k - 3)]);
+				dp[max(0, i - 3)][max(0,j - 9)][max(0,k - 1)] = min(dp[max(0,i)][max(0,j)][max(0,k)] + 1, dp[max(0, i - 3)][max(0,j - 9)][max(0,k - 1)]);
+				dp[max(0, i - 3)][max(0,j - 1)][max(0,k - 9)] = min(dp[max(0,i)][max(0,j)][max(0,k)] + 1, dp[max(0, i - 3)][max(0,j - 1)][max(0,k - 9)]);
+				dp[max(0, i - 1)][max(0,j - 3)][max(0,k - 9)] = min(dp[max(0,i)][max(0,j)][max(0,k)] + 1, dp[max(0, i - 1)][max(0,j - 3)][max(0,k - 9)]);
+				dp[max(0, i - 1)][max(0,j - 9)][max(0,k - 3)] = min(dp[max(0,i)][max(0,j)][max(0,k)] + 1, dp[max(0, i - 1)][max(0,j - 9)][max(0,k - 3)]);
 			}
 		}
 	}

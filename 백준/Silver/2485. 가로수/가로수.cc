@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include <map>
+#include <algorithm>
 #include <cmath>
 
 using namespace std;
@@ -23,16 +23,11 @@ void input() {
 	}
 }
 
-int gcd(int a, int b) {
-	if(b == 0) return a;
-	return gcd(b, a % b);
-}
-
 void solve() {
-	int large = gcd(mns[1], mns[0]);
+	int large = __gcd(mns[1], mns[0]);
 	
 	for(int i=2; i<mns.size(); i++) {
-		large = gcd(mns[i], large);
+		large = __gcd(mns[i], large);
 	}
 	
 	for(int i=0; i<mns.size(); i++) {

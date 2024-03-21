@@ -34,7 +34,6 @@ int solution(int m, int n, vector<vector<int>> city_map) {
     // 1 == 오른쪽, 0 == 아래
     for(int i=1; i<=m; i++) {
         for(int j=1; j<=n; j++) {
-            if(arr[i][j] == 1) continue;
             if(arr[i][j] == 0) {
                 dp[i+1][j][1] += (dp[i][j][0] + dp[i][j][1]) % 20170805;
                 dp[i][j+1][0] += (dp[i][j][0] + dp[i][j][1]) % 20170805;

@@ -1,32 +1,29 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <map>
 
 using namespace std;
 
 int n;
 vector<int> vec;
-vector<int> v;
+int arr[1000002];
 
 void input() {
 	cin >> n;
-
 	for(int i=0; i<n; i++) {
-		int tmp;
-		cin >> tmp;
-		vec.push_back(tmp);
-		v.push_back(tmp);
-	}	
-	sort(v.begin(), v.end());
+		cin >> arr[i];
+		vec.push_back(arr[i]);
+	}
 	
-	v.erase(unique(v.begin(), v.end()), v.end());
+	sort(vec.begin(), vec.end());
+	vec.erase(unique(vec.begin(), vec.end()), vec.end());
 }
 
 void solve() {
 	for(int i=0; i<n; i++) {
-		cout << lower_bound(v.begin(), v.end(), vec[i]) - v.begin() << " ";	
-	}
+		int idx = lower_bound(vec.begin(), vec.end(), arr[i]) - vec.begin();
+		cout << idx << " ";
+	}	
 }
 
 int main() {

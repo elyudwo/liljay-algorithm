@@ -1,43 +1,47 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+
 using namespace std;
 
-int n,m;
-vector<int> vec;
+int n, m;
 vector<int> rem;
-bool check[10001];
+vector<int> vec;
 
-
-void dfs(int x,int cnt) {
-	if(cnt == m) {
-		for(int i=0; i<rem.size(); i++) {
-			cout << rem[i] << " ";
-		}
-		cout << '\n';
-		return;
-	}
-	
-	
-	for(int i=x; i<vec.size(); i++) {
-		if(check[vec[i]]) { continue; }
-		check[vec[i]] = true;
-		rem.push_back(vec[i]);
-		dfs(i,cnt+1);
-		check[vec[i]] = false;
-		rem.pop_back();
-		
-	}
-}
-
-int main() {
+void input() {
 	cin >> n >> m;
+	
 	for(int i=0; i<n; i++) {
 		int tmp;
 		cin >> tmp;
 		vec.push_back(tmp);
 	}
-	sort(vec.begin(),vec.end());
 	
-	dfs(0,0);
+	sort(vec.begin(), vec.end());
+}
+
+void dfs(int idx) {
+	if(rem.size() == m) {
+		for(int tmp : rem) {
+			cout << tmp << " ";
+		}
+		cout << '\n';
+		return;
+	}
+	
+	for(int i=idx; i<n; i++) {
+		rem.push_back(vec[i]);
+		dfs(i + 1);
+		rem.pop_back();
+	}
+}
+
+void solve() {
+	dfs(0);
+}
+
+int main() {
+	input();
+	solve();
+	
 }

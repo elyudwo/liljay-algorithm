@@ -2,36 +2,36 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include <map>
 
 using namespace std;
+
+int each[2002];
 
 long long solution(vector<int> weights) {
     long long answer = 0;
     
-    sort(weights.begin(), weights.end());
-    
-    for(int i=0; i<weights.size(); i++) {
-        for(int j=i+1; j<weights.size(); j++) {
-            if(weights[i] * 4 < weights[j] * 2) {
-                // cout << weights[i] * 4 << " " << weights[j] * 2 << endl;
-                // cout << i << " " << j << endl;
-                break;
-            }
-            
-            if(weights[i] * 2 == weights[j] * 2) {
-                answer++;
-            }
-            else if(weights[i] * 3 == weights[j] * 2) {
-                answer++;
-            }
-            else if(weights[i] * 4 == weights[j] * 2) {
-                answer++;
-            }
-            else if(weights[i] * 4 == weights[j] * 3) {
-                answer++;
-            }
-        }
+    for(int i=0; i<=2000; i++) {
+        each[i] = 0;
     }
+    
+    for(int num : weights) { each[num]++; }
+    
+    for(int i=100; i<=1000; i++) {
+        if(!each[i]) continue;
+        long long tmp;
+        answer += (long long)each[i] * (each[i] - 1) / 2;
+        
+        if(i % 3 == 0) {
+            answer += (long long)each[i] * each[i * 4 / 3];
+        }
+        if(i % 2 == 0) {
+            answer += (long long)each[i] * each[i * 3 / 2];
+        }
+        answer += (long long)each[i] * each[i * 2];
+    }
+        
+    
     
     return answer;
 }

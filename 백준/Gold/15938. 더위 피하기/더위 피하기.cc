@@ -22,8 +22,7 @@ int main() {
 	
 	cin >> ex >> ey;
 	
-	if(200 + ex - sx < 0 || 200 + ex - sx > 400 || 
-	    200 + ey - sy < 0 || 200 + ey - sy > 400) {
+	if(abs(sx - ex) + abs(sy - ey) > t) {
 		cout << "0";
 		return 0;
 	}
@@ -35,8 +34,7 @@ int main() {
 	while(n--) {
 		int x,y;
 		cin >> x >> y;
-		if(200 + x - sx >= 0 && 200 + x - sx <= 400 && 200 + y - sy >= 0 
-		&& 200 + y - sy <= 400) {
+		if(abs(x - sx) + abs(y - sy) <= t) {
 			obs[200 + x - sx][200 + y - sy] = true;
 		}
 	}
